@@ -56,9 +56,13 @@
         </div>
         <div class="input-group">
           <label>Senha</label>
-          <input type="password" id="login-password" placeholder="••••••••">
+          <div class="password-wrap">
+            <input type="password" id="login-password" placeholder="········">
+            <button type="button" class="toggle-pw" onclick="togglePasswordVisibility('login-password', this)" title="Mostrar/ocultar senha">👁️</button>
+          </div>
         </div>
         <button class="btn btn-primary" onclick="doLogin()">🚀 Entrar</button>
+        <button type="button" class="btn-forgot" onclick="openForgotPassword()">Esqueci minha senha</button>
       </div>
       <div id="auth-form-register" style="display:none">
         <div class="input-group">
@@ -71,7 +75,10 @@
         </div>
         <div class="input-group">
           <label>Senha</label>
-          <input type="password" id="reg-password" placeholder="mínimo 6 caracteres">
+          <div class="password-wrap">
+            <input type="password" id="reg-password" placeholder="mínimo 6 caracteres">
+            <button type="button" class="toggle-pw" onclick="togglePasswordVisibility('reg-password', this)" title="Mostrar/ocultar senha">👁️</button>
+          </div>
         </div>
         <button class="btn btn-primary" onclick="doRegister()">🌱 Criar conta</button>
       </div>
@@ -367,11 +374,31 @@
   </div>
 
   <!-- TOAST -->
-  <div id="toast-container"></div>
+  
+<!-- ======= MODAL: ESQUECI SENHA ======= -->
+<div id="modal-forgot" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:9999; display:none; align-items:center; justify-content:center; padding:1rem;">
+  <div style="background:var(--bg-panel); border:1px solid var(--border); border-radius:16px; padding:2rem; width:100%; max-width:360px; box-shadow:0 8px 40px rgba(0,0,0,0.5);">
+    <div style="font-size:2rem; text-align:center; margin-bottom:0.5rem;">🔑</div>
+    <h3 style="text-align:center; margin:0 0 0.5rem; color:var(--text);">Recuperar senha</h3>
+    <p style="text-align:center; color:var(--text-muted); font-size:0.85rem; margin-bottom:1.5rem;">Digite seu email e enviaremos a senha por email.</p>
+    <div class="input-group">
+      <label>Email cadastrado</label>
+      <input type="email" id="forgot-email" placeholder="seu@email.com">
+    </div>
+    <div class="auth-error" id="forgot-error" style="margin-bottom:0.75rem;"></div>
+    <button class="btn btn-primary" onclick="doForgotPassword()" id="btn-forgot-send">📧 Enviar senha</button>
+    <button class="btn btn-guest" onclick="closeForgotPassword()" style="margin-top:0.5rem;">Cancelar</button>
+  </div>
+</div>
+
+<div id="toast-container"></div>
 
 </div><!-- /app -->
 
-<!-- Spotify Web Playback SDK - deferred to avoid render blocking -->
+<!-- EmailJS (recuperação de senha gratuita: emailjs.com) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>emailjs.init("SEU_PUBLIC_KEY_EMAILJS");</script>
+  <!-- Spotify Web Playback SDK - deferred to avoid render blocking -->
 <script defer src="https://sdk.scdn.co/spotify-player.js"></script>
 <!-- Spotify integration -->
 <script src="sp-player.js"></script>

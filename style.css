@@ -709,3 +709,44 @@ body {
 .loading-bar { width: 200px; height: 4px; background: var(--bg-panel); border-radius: 2px; margin-top: 1rem; overflow: hidden; }
 .loading-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; animation: loadAnim 1.5s ease-in-out infinite; }
 @keyframes loadAnim { 0% { width: 0%; } 100% { width: 100%; } }
+/* ===== SENHA VISÍVEL & ESQUECI SENHA ===== */
+.password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.password-wrap input {
+  width: 100%;
+  padding-right: 2.8rem !important;
+}
+.toggle-pw {
+  position: absolute;
+  right: 0.6rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  opacity: 0.6;
+  padding: 0.2rem;
+  line-height: 1;
+  transition: opacity 0.2s;
+  min-height: unset;
+  border-radius: 4px;
+}
+.toggle-pw:hover { opacity: 1; }
+.toggle-pw.visible { opacity: 1; filter: drop-shadow(0 0 4px var(--accent)); }
+.btn-forgot {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  margin-top: 0.5rem;
+  padding: 0.3rem;
+  text-decoration: underline;
+  font-family: inherit;
+  transition: color 0.2s;
+}
+.btn-forgot:hover { color: var(--accent); }

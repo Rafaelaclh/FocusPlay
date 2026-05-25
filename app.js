@@ -143,6 +143,7 @@ function loadState() {
 
 function saveState() {
   LS.set('gamestate', GS);
+  if (GS.uid) LS.set('gs_'+GS.uid, GS); // salva por uid para múltiplos usuários
   if (useFirebase && GS.uid) {
     try {
       updateDoc(doc(db, 'users', GS.uid), {
@@ -205,8 +206,9 @@ async function doLogin() {
     const user = users[email];
     if (!user || user.pass !== btoa(pass)) { setAuthError('Email ou senha incorretos'); return; }
     GS.uid = user.uid; GS.name = user.name; GS.email = email;
-    const savedGS = LS.get('gs_'+GS.uid);
-    if (savedGS) GS = Object.assign(GS, savedGS, { timerRunning: false });
+    // Tenta carregar estado salvo por uid; fallback para 'gamestate' (compatibilidade)
+    const savedGS = LS.get('gs_'+GS.uid) || LS.get('gamestate');
+    if (savedGS) GS = Object.assign(GS, savedGS, { uid: user.uid, name: user.name, email: email, timerRunning: false });
     enterGame();
   }
 }
@@ -263,6 +265,108 @@ function firebaseErr(e) {
   return m[e.code] || 'Erro: ' + e.message;
 }
 
+
+// ==================== MOSTRAR/OCULTAR SENHA ====================
+function togglePasswordVisibility(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.classList.add('visible');
+    btn.title = 'Ocultar senha';
+  } else {
+    input.type = 'password';
+    btn.classList.remove('visible');
+    btn.title = 'Mostrar senha';
+  }
+}
+window.togglePasswordVisibility = togglePasswordVisibility;
+
+// ==================== ESQUECI MINHA SENHA ====================
+// Configuração EmailJS: https://www.emailjs.com/
+// 1. Crie conta gratuita em emailjs.com (200 emails/mês grátis)
+// 2. Crie um Email Service (Gmail, Outlook etc.)
+// 3. Crie um Email Template com as variáveis: {{to_email}}, {{to_name}}, {{user_password}}
+// 4. Substitua os valores abaixo com seus dados do EmailJS
+const EMAILJS_SERVICE_ID  = 'SEU_SERVICE_ID';   // ex: 'service_abc123'
+const EMAILJS_TEMPLATE_ID = 'SEU_TEMPLATE_ID';  // ex: 'template_xyz789'
+// A Public Key já foi configurada no index.html via emailjs.init()
+
+function openForgotPassword() {
+  const modal = document.getElementById('modal-forgot');
+  modal.style.display = 'flex';
+  const emailInput = document.getElementById('login-email');
+  if (emailInput.value) document.getElementById('forgot-email').value = emailInput.value;
+  document.getElementById('forgot-error').textContent = '';
+}
+window.openForgotPassword = openForgotPassword;
+
+function closeForgotPassword() {
+  document.getElementById('modal-forgot').style.display = 'none';
+  document.getElementById('forgot-email').value = '';
+  document.getElementById('forgot-error').textContent = '';
+}
+window.closeForgotPassword = closeForgotPassword;
+
+async function doForgotPassword() {
+  const email = document.getElementById('forgot-email').value.trim();
+  const errorEl = document.getElementById('forgot-error');
+  const btn = document.getElementById('btn-forgot-send');
+
+  if (!email) { errorEl.textContent = 'Digite seu email'; return; }
+
+  // Modo Firebase: usa o reset nativo do Firebase
+  if (useFirebase) {
+    try {
+      btn.disabled = true;
+      btn.textContent = '⏳ Enviando...';
+      const { sendPasswordResetEmail } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
+      await sendPasswordResetEmail(auth, email);
+      closeForgotPassword();
+      showToast('✅ Email de recuperação enviado! Verifique sua caixa de entrada.', 'success');
+    } catch(e) {
+      errorEl.textContent = firebaseErr(e);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '📧 Enviar senha';
+    }
+    return;
+  }
+
+  // Modo localStorage: envia a senha via EmailJS
+  const users = LS.get('users', {});
+  const user = users[email];
+  if (!user) { errorEl.textContent = 'Email não cadastrado'; return; }
+
+  // Verifica se EmailJS foi configurado
+  if (EMAILJS_SERVICE_ID === 'SEU_SERVICE_ID') {
+    errorEl.textContent = '';
+    // Fallback: mostra instrução de configuração no console
+    console.warn('[FocusPlay] Configure o EmailJS no app.js para envio de emails. Veja as instruções nos comentários da função doForgotPassword().');
+    closeForgotPassword();
+    showToast('⚠️ EmailJS não configurado. Veja o console para instruções.', 'warning');
+    return;
+  }
+
+  try {
+    btn.disabled = true;
+    btn.textContent = '⏳ Enviando...';
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_email: email,
+      to_name: user.name,
+      user_password: atob(user.pass), // decodifica a senha salva em base64
+    });
+    closeForgotPassword();
+    showToast('✅ Senha enviada para ' + email + '! Verifique sua caixa de entrada.', 'success');
+  } catch(e) {
+    errorEl.textContent = 'Erro ao enviar email. Tente novamente.';
+    console.error('EmailJS error:', e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '📧 Enviar senha';
+  }
+}
+window.doForgotPassword = doForgotPassword;
+
 // ==================== NAVIGATION ====================
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -294,8 +398,7 @@ function enterGame() {
   document.getElementById('loading-screen').style.display = 'none';
   setupVisibilityAPI();
 
-  // Carrega o módulo do Spotify após entrar no jogo
-  import('./spotify.js').catch(e => console.warn('Spotify module:', e));
+  // sp-player.js já é carregado via <script> no index.html
 }
 
 // ==================== HUD ====================
