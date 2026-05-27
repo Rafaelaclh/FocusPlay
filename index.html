@@ -12,7 +12,8 @@
 <!-- Non-blocking font load with font-display=swap -->
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="style.css">
+<link rel="preload" href="style.css" as="style" onload="this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="style.css"></noscript>
 </head>
 <body>
 
@@ -97,8 +98,9 @@
         <div class="stat-badge"><span class="icon">🪙</span><span id="hdr-coins">0</span></div>
         <div class="stat-badge"><span class="icon">🔥</span><span id="hdr-streak">0</span></div>
       </div>
-      <div class="header-user" onclick="doLogout()">
+      <div class="header-user">
         <div class="avatar" id="hdr-avatar">😊</div>
+        <button class="btn-logout" onclick="doLogout()" title="Sair">Sair</button>
       </div>
     </div>
 
@@ -396,12 +398,11 @@
 </div><!-- /app -->
 
 <!-- EmailJS (recuperação de senha gratuita: emailjs.com) -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>emailjs.init("SEU_PUBLIC_KEY_EMAILJS");</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" onload="emailjs.init('SEU_PUBLIC_KEY_EMAILJS')"></script>
   <!-- Spotify Web Playback SDK - deferred to avoid render blocking -->
 <script defer src="https://sdk.scdn.co/spotify-player.js"></script>
 <!-- Spotify integration -->
-<script src="sp-player.js"></script>
+<script defer src="sp-player.js"></script>
 <!-- Firebase SDK -->
 <script type="module" src="app.js"></script>
 

@@ -129,6 +129,14 @@ let GS = {
 let timerInterval = null;
 let currentPickSlot = -1;
 
+
+// ==================== DEBOUNCE UTIL ====================
+let _saveTimer = null;
+function saveStateDebounced() {
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(saveState, 800);
+}
+
 // ==================== LOAD / SAVE ====================
 function loadState() {
   const saved = LS.get('gamestate');
@@ -250,7 +258,6 @@ function doGuest() {
 window.doGuest = doGuest;
 
 function doLogout() {
-  if (!confirm('Sair do jogo?')) return;
   saveState();
   if (timerInterval) clearInterval(timerInterval);
   GS = { uid:null, name:'Jogador', email:null, avatar:'😊', xp:0, coins:0, level:1, streak:0, lastSessionDate:null, totalSessions:0, todaySessions:0, totalFocusMins:0, totalPlants:0, farmSlots:3, farmPlots:[], inventory:{wheat:5, carrot:2}, timerDuration:25, timerMode:'solo', timerRunning:false, timerPhase:'focus', timerSecondsLeft:25*60, timerTotalSeconds:25*60, sessionStartTime:null, sessionsThisPomodoro:0, currentSessionMins:0, awayStartTime:null, purchased:{}, soilMultiplier:1.0, hasGreenhouse:false, fertilizedSlot:-1, todayChallenges:{}, challengeProgress:{}, rankScore:0, rankWeekly:0 };

@@ -77,7 +77,7 @@ body {
 .auth-logo {
   font-size: 3rem;
   margin-bottom: 0.5rem;
-  animation: floatAnim 3s ease-in-out infinite;
+  animation: floatAnim 4s ease-in-out infinite;
 }
 @keyframes floatAnim {
   0%,100% { transform: translateY(0); }
@@ -145,7 +145,8 @@ body {
 /* ===================== HEADER ===================== */
 #header {
   background: rgba(22,22,40,0.95);
-  backdrop-filter: blur(12px);
+  /* backdrop-filter removido para performance */
+  -webkit-backdrop-filter: none;
   border-bottom: 1px solid var(--border);
   padding: 0.75rem 1.5rem;
   display: flex; align-items: center; justify-content: space-between;
@@ -165,7 +166,8 @@ body {
 /* ===================== NAV ===================== */
 #nav {
   background: rgba(22,22,40,0.95);
-  backdrop-filter: blur(12px);
+  /* backdrop-filter removido para performance */
+  -webkit-backdrop-filter: none;
   border-top: 1px solid var(--border);
   padding: 0.5rem;
   display: flex; justify-content: space-around;
@@ -186,7 +188,7 @@ body {
 
 /* Performance: promote animated elements to own layer */
 .timer-progress { will-change: stroke-dashoffset; }
-.xp-fill, .ch-progress-fill, .slot-progress-fill, .sp-progress-bar { will-change: width; }
+/* width will-change removido — causa layer promotion desnecessário */
 .loading-fill { will-change: width; }
 
 /* ===================== TIMER PAGE ===================== */
@@ -506,7 +508,7 @@ body {
 }
 @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(6,214,160,0.4); } 50% { box-shadow: 0 0 0 8px rgba(6,214,160,0); } }
 
-.farm-grid {
+.farm-grid { contain: layout style;
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.5rem;
 }
 .farm-slot {
@@ -694,7 +696,7 @@ body {
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 400px) {
-  .farm-grid { grid-template-columns: repeat(2, 1fr); }
+  .farm-grid { contain: layout style; grid-template-columns: repeat(2, 1fr); }
   .shop-grid { grid-template-columns: 1fr; }
 }
 
@@ -750,3 +752,25 @@ body {
   transition: color 0.2s;
 }
 .btn-forgot:hover { color: var(--accent); }
+
+/* ===== BOTÃO SAIR (HEADER) ===== */
+.header-user { gap: 0.6rem !important; }
+.btn-logout {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: inherit;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.btn-logout:hover {
+  border-color: var(--accent4);
+  color: var(--accent4);
+  background: rgba(239,68,68,0.08);
+}

@@ -1,175 +1,220 @@
-#  FocusPlay Arena
+ FocusPlay 
 
-Estude com foco. Cultive sua fazenda. Evolua enquanto aprende.
+Estude com foco. Cultive sua fazenda. Compita com o mundo.
 
-O **FocusPlay Arena** é uma aplicação web gamificada de produtividade desenvolvida para transformar sessões de estudo em uma experiência mais divertida, interativa e motivadora. O projeto combina a técnica Pomodoro com elementos de jogos, permitindo que o usuário evolua dentro de uma fazenda virtual enquanto mantém o foco nos estudos.
+O FocusPlay Arena é um aplicativo web gamificado de produtividade que une a técnica Pomodoro com um sistema de fazenda virtual interativa. O objetivo da plataforma é transformar sessões de estudo em uma experiência divertida, motivadora e competitiva, incentivando os usuários a manterem o foco através de recompensas, progressão de níveis e desafios diários.
 
-A plataforma foi criada com foco em produtividade, gamificação e experiência do usuário, incentivando a disciplina através de recompensas, progressão e desafios.
+Durante cada sessão de foco, o usuário cultiva plantas virtuais que evoluem conforme o tempo de estudo é concluído. Caso o usuário abandone a aplicação durante uma sessão ativa, penalidades são aplicadas às plantações, criando um sistema de responsabilidade e comprometimento com os estudos.
 
----
+Além disso, o sistema contará com integração com a API do Spotify, permitindo que os estudantes possam ouvir músicas, playlists e sons ambientes enquanto estudam, tornando a experiência mais agradável e personalizada.
 
-# 🚀 Tecnologias Utilizadas
+✨ Funcionalidades
+⏱️ Sistema Pomodoro
 
-* HTML5
-* CSS3
-* JavaScript
-* Firebase Authentication
-* Firebase Firestore
-* Spotify API
-* LocalStorage
-* PWA (Progressive Web App)
+O sistema de produtividade utiliza a técnica Pomodoro, permitindo sessões configuráveis de:
 
----
+25 minutos
+45 minutos
+60 minutos
 
-# 🎯 Objetivo do Projeto
+O aplicativo possui:
 
-O principal objetivo do FocusPlay Arena é tornar o estudo mais estimulante através de mecânicas de gamificação.
+Pausas curtas automáticas de 5 minutos
+Pausas longas automáticas de 15 minutos
+Controle de início, pausa e encerramento das sessões
 
-Ao completar sessões de foco, o usuário recebe recompensas dentro do sistema, podendo evoluir sua fazenda virtual, desbloquear melhorias e acompanhar seu progresso.
+Também existem dois modos de estudo:
 
-O projeto busca auxiliar estudantes e usuários que possuem dificuldade em manter constância e concentração durante tarefas longas.
+☕ Solo
 
----
+Modo individual focado apenas na produtividade pessoal.
 
-# ⏱️ Sistema Pomodoro
+⚔️ Arena
 
-O sistema utiliza a técnica Pomodoro com sessões configuráveis de estudo.
+Modo competitivo onde o jogador recebe bônus de +25% de XP ao estudar competindo com outros usuários.
 
-## Modos disponíveis
+🌾 Fazenda Virtual
 
-* 25 minutos
-* 45 minutos
-* 60 minutos
+A fazenda virtual representa visualmente o progresso do usuário durante os estudos.
 
-## Pausas automáticas
+O jogador pode:
 
-* ☕ Pausa curta: 5 minutos
-* 🌙 Pausa longa: 15 minutos
-
-O usuário pode iniciar, pausar e encerrar sessões conforme necessário.
-
----
-
-# 🌾 Sistema de Fazenda
-
-Durante os períodos de foco, plantas são cultivadas automaticamente dentro da fazenda virtual.
+Plantar sementes
+Acompanhar o crescimento das plantas
+Colher plantações concluídas
+Ganhar moedas virtuais
+Expandir sua fazenda
 
 O sistema possui:
 
-* Diferentes tipos de plantas
-* Sistema de crescimento
-* Recompensas em moedas
-* Evolução da fazenda
-* Expansão de espaços de cultivo
+9 tipos de plantas
+Sistema de raridade
+Qualidade influenciada pelo comportamento do usuário
+Slots expansíveis de fazenda
 
-Quanto maior o tempo de estudo, maior será a evolução da plantação.
+O jogador inicia com 3 espaços de plantio e pode expandir até 6 slots.
 
----
+⚠️ Sistema de Penalidades
 
-# ⚠️ Sistema de Penalidades
+O FocusPlay Arena possui um sistema de penalidades para incentivar o foco contínuo.
 
-Para evitar distrações durante o uso da plataforma, o sistema detecta quando o usuário abandona a página durante uma sessão ativa.
+Caso o usuário saia da aplicação durante uma sessão ativa, as plantas sofrem consequências de acordo com sua raridade:
 
-Dependendo da raridade da planta, diferentes penalidades podem ocorrer:
+Raridade	Penalidade
+Comum	❄️ Congela o crescimento
+Raro	📉 Perde qualidade
+Épico	⏪ Regride progresso
+Lendário	💀 Morre e perde a semente
 
-| Raridade | Penalidade                  |
-| -------- | --------------------------- |
-| Comum    | Congelamento do crescimento |
-| Raro     | Perda de qualidade          |
-| Épico    | Regressão de progresso      |
-| Lendário | Perda da planta             |
+A detecção ocorre através da utilização da Page Visibility API.
 
----
+🏆 Progressão do Jogador
 
-# 🏆 Sistema de Progressão
+O sistema possui progressão baseada em experiência (XP) e níveis.
 
-O jogador recebe:
+O jogador ganha XP ao:
 
-* XP
-* Moedas
-* Evolução de nível
-* Recompensas diárias
-* Streaks de produtividade
+Completar sessões
+Cumprir desafios
+Manter streaks diários
+Participar da Arena
 
-Esses recursos incentivam a permanência e constância dentro da plataforma.
+Também existem:
 
----
+🔥 Sistema de sequência diária (streak)
+🏅 Ranking global
+📊 Placar semanal
+🎯 Desafios diários
+🎯 Desafios Diários
 
-# 🎵 Integração com Spotify API
+Os desafios incentivam a constância nos estudos e oferecem recompensas adicionais.
 
-O projeto utiliza integração com a API do Spotify para proporcionar uma experiência mais imersiva durante os estudos.
+Desafio	Objetivo	Recompensa
+Maratonista	Completar 3 sessões	+50 XP e +30 moedas
+Sem parar	Não sair do app durante uma sessão	+40 XP e +20 moedas
+Colheita	Colher 2 plantas	+60 XP e +40 moedas
+Foco longo	Completar sessão de 45 minutos	+80 XP e +50 moedas
+📊 Sistema de Níveis
+Nível	Nome	XP Necessário
+1	Sementinha 🌱	0
+2	Brotinho 🌿	100
+3	Agricultor 🧑‍🌾	250
+4	Fazendeiro 🌾	500
+5	Mestre Foco 🎯	900
+6	Cultivador 🪴	1.500
+7	Guardião 🌳	2.500
+8	Lendário 💫	4.000
+9	Mítico 🌌	6.000
+10	Arquimago 💎	9.000
+🏪 Loja Virtual
 
-Com isso, o usuário pode:
+A loja permite utilizar moedas obtidas durante o jogo para adquirir melhorias.
 
-* Ouvir playlists para foco
-* Utilizar músicas ambientes
-* Melhorar a experiência de produtividade
-* Personalizar o ambiente de estudo
+Expansões
+Novos slots de fazenda
+Estufa com bônus de +50% rendimento
+Melhorias
+Solo Rico (+20% rendimento)
+Solo Fértil (+50% rendimento)
+Fertilizantes para acelerar crescimento
+Cosméticos
+Pets virtuais 🐱🐶🦊
+Decorações para a fazenda
+🌿 Plantas Disponíveis
+Planta	Emoji	Raridade	Sessão Necessária	Rendimento	Custo
+Trigo	🌾	Comum	1 min	15 moedas	Grátis
+Cenoura	🥕	Comum	2 min	25 moedas	10 moedas
+Milho	🌽	Comum	3 min	40 moedas	20 moedas
+Tomate	🍅	Raro	5 min	80 moedas	50 moedas
+Abóbora	🎃	Raro	7 min	120 moedas	80 moedas
+Uva	🍇	Épico	10 min	200 moedas	150 moedas
+Melão	🍈	Épico	12 min	280 moedas	200 moedas
+Trufa	🍄	Lendário	20 min	500 moedas	400 moedas
+Cristal	💎	Lendário	25 min	800 moedas	600 moedas
+🎵 Integração com Spotify
 
----
+O projeto contará com integração da API do Spotify para permitir que os usuários possam ouvir música durante os estudos sem precisar sair da plataforma.
 
+As funcionalidades previstas incluem:
 
-# ☁️ Firebase
+Login com conta Spotify
+Reprodução de playlists de estudo
+Música ambiente durante sessões Pomodoro
+Controle de play/pause dentro do aplicativo
+Sugestões automáticas de playlists para foco
+Integração opcional com playlists favoritas do usuário
 
-O Firebase é utilizado para:
+Essa funcionalidade busca aumentar a imersão e melhorar a experiência do estudante durante os períodos de concentração.
 
-* Autenticação
-* Banco de dados
-* Salvamento de progresso
-* Ranking online
-* Armazenamento de informações do usuário
+🔐 Sistema de Autenticação
 
----
+O aplicativo possui:
 
-# 📱 PWA
+Cadastro com e-mail e senha
+Login de usuário
+Modo visitante
 
-O projeto possui suporte para Progressive Web App.
+O progresso pode ser:
 
-Isso permite:
+Salvo localmente no navegador
+Sincronizado em nuvem com Firebase
+☁️ Integração com Firebase
 
-* Instalação no celular
-* Uso semelhante a aplicativo
-* Melhor experiência mobile
-* Execução em tela cheia
+Quando habilitado, o Firebase será utilizado para:
 
----
+Autenticação de usuários
+Banco de dados em nuvem com Firestore
+Sincronização de progresso
+Ranking online
+Armazenamento de dados do jogador
 
-# 📂 Estrutura do Projeto
+Caso o Firebase esteja desativado, o sistema continua funcionando normalmente utilizando LocalStorage.
 
+🛠️ Tecnologias Utilizadas
 
-FocusPlay/
-│
-├── index.html
-├── style.css
-├── app.js
+O projeto será desenvolvido utilizando:
 
+HTML5
+CSS3
+JavaScript puro
+Firebase Auth
+Firebase Firestore
+Spotify Web API
+Web Notifications API
+Page Visibility API
+PWA (Progressive Web App)
 
----
+Também serão utilizadas as fontes:
 
-# 📚 Finalidade Acadêmica
+Google Fonts Nunito
+Google Fonts Space Mono
+📁 Estrutura do Projeto
+/
+├── index.html      # Estrutura principal da aplicação
+├── style.css       # Estilização completa do sistema
+├── app.js          # Lógica principal do jogo e sistema Pomodoro
+├── spotify.js      # Integração com API do Spotify
+└── manifest.json   # Configuração PWA
+🚀 Como Utilizar
+Abra o arquivo index.html em um navegador moderno
+Faça login ou utilize o modo visitante
+Escolha uma sessão Pomodoro
+Vá até a fazenda e plante sementes
+Mantenha o foco durante a sessão
+Colha plantas para ganhar moedas
+Utilize moedas na loja para expandir sua fazenda
+Conecte sua conta Spotify para ouvir músicas durante os estudos
+⚙️ Configuração Firebase
 
-O projeto foi desenvolvido com finalidade acadêmica para aplicação prática dos conceitos de:
+Para utilizar sincronização em nuvem, configure as credenciais do Firebase no arquivo app.js.
 
-* Desenvolvimento Web
-* JavaScript moderno
-* Gamificação
-* Integração com APIs
-* Firebase
-* UX/UI
-* Progressive Web Apps
+const firebaseConfig = {
+  apiKey: "SUA_API_KEY",
+  authDomain: "SEU_PROJETO.firebaseapp.com",
+  projectId: "SEU_PROJETO",
+};
+🎓 Objetivo do Projeto
 
----
+O FocusPlay Arena busca transformar o estudo em uma experiência mais divertida, interativa e motivadora, utilizando elementos de gamificação para aumentar o foco, a disciplina e a constância dos usuários.
 
-# 👨‍💻 Equipe de Desenvolvimento
-
-* Rafaela Martins
-* Emilly Ruff
-* Guilherme Izaias
-
----
-
-# 🌟 Considerações Finais
-
-O FocusPlay Arena demonstra como técnicas de gamificação podem ser utilizadas para transformar produtividade em uma experiência mais motivadora e interativa.
-
-Combinando foco, recompensas e progressão, o projeto busca incentivar hábitos saudáveis de estudo e organização através de uma plataforma acessível, moderna e dinâmica.
+A combinação entre produtividade, competição, recompensas e personalização musical cria um ambiente moderno capaz de incentivar estudantes a manterem hábitos de estudo mais saudáveis e eficientes.
